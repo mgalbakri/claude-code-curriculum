@@ -34,6 +34,21 @@
 **Deliverable:** A project folder structure created entirely from the terminal with Node.js installed.
 **Skills:** Terminal navigation, file management, reading error messages, Node.js setup
 
+#### Terminal & Environment Updates (Feb 2026)
+- **Terminal rendering performance** improved significantly (v2.1.39)
+- **Fatal errors** are now properly displayed instead of being swallowed (v2.1.39)
+- **Process hanging** after session close fixed (v2.1.39)
+- **Vim normal mode** now supports arrow key history navigation when cursor cannot move further (v2.1.20)
+- **External editor shortcut** (Ctrl+G) added to the help menu (v2.1.20)
+- **Customizable spinner verbs** via `spinnerVerbs` setting (v2.1.23)
+- **mTLS and proxy connectivity** fixed for corporate proxies and client certificates (v2.1.23)
+- **Installation change:** npm installations are deprecated — use `claude install` instead (v2.1.15)
+
+**Exercise:**
+- Run `claude install` if you previously installed via npm
+- Try Ctrl+G to open an external editor from within Claude Code
+- Customize your spinner verbs in settings
+
 ---
 
 ### WEEK 2: Git & Version Control
@@ -58,6 +73,16 @@
 
 **Deliverable:** Your vessel database project published on GitHub with at least 5 meaningful commits and 1 merged PR.
 **Skills:** Git fundamentals, GitHub, branching, pull requests, authentication tokens
+
+#### Git Workflow Updates (Feb 2026)
+- **`--from-pr` flag** added to resume sessions linked to a specific GitHub PR number (v2.1.27)
+- **Debug logs** now include tool call failures and denials (v2.1.27)
+- **Community tip — Token optimization:** The `rtk` (Rust Token Killer) CLI proxy can sit between Claude Code and terminal commands, filtering noise from raw command output before it reaches the LLM context (reported 89% token savings)
+- **Community tip — Cleaner PR reviews:** When using `claude-code-action` in GitHub workflows, configure it to reduce comment noise and clean up old comments
+
+**Exercise:**
+- Try `claude --from-pr 42` to resume a session tied to a specific PR
+- Explore token-saving strategies for long-running sessions
 
 ---
 
@@ -93,6 +118,28 @@
 - **Claude Haiku 4.5** (Oct 2025) — Fastest and most affordable. Matches prior state-of-the-art coding. Use for quick tasks and high-volume operations.
 
 **Key takeaway:** Claude Code lets you switch models mid-session. Use Opus 4.6 for complex architecture decisions, Sonnet 4.5 for everyday coding, and Haiku 4.5 for rapid iteration.
+
+#### Claude Code Feature Updates (Feb 2026)
+
+**Opus 4.6:**
+Claude Opus 4.6 is now the default model in Claude Code (v2.1.32). It plans more carefully, stays on task longer, and works more autonomously. Fast mode is also available for Opus 4.6 — toggle with `/fast` (v2.1.36).
+
+**Sonnet 4.5:**
+Claude Sonnet 4.5 sets new benchmark records in coding, reasoning, and computer use while being Anthropic's most aligned model.
+
+**Task Management System:**
+A new task management system with dependency tracking was added (v2.1.16). Tasks can be created, updated, and tracked with `blockedBy`/`blocks` relationships. Disable with `CLAUDE_CODE_ENABLE_TASKS=false` to use the old system temporarily.
+
+**Auto Memory:**
+Claude now automatically records and recalls memories as it works (v2.1.32). Memories persist in `~/.claude/` and are loaded into the system prompt for future sessions.
+
+**Session Resume:**
+On exit, Claude Code now shows a session resume hint so you can continue your conversation later (v2.1.31).
+
+**Exercise:**
+- Toggle `/fast` mode and compare response speed vs. quality
+- Let Claude build up auto memories across a few sessions, then review what it stored in `~/.claude/`
+- Use the task management system on a multi-step project to track progress
 
 ---
 
@@ -174,6 +221,14 @@
 **Deliverable:** A secure, authenticated dashboard with data visualization.
 **Skills:** Authentication, dashboards, error handling, /code-review, responsive design
 
+#### Authentication & Dashboard Updates (Feb 2026)
+- **PDF page-range reading:** The Read tool now accepts a `pages` parameter for PDFs (e.g., `pages: "1-5"`). Large PDFs (>10 pages) return a lightweight reference when `@` mentioned instead of being inlined into context (v2.1.30)
+- **Task management in VS Code:** Native plugin management support added, plus OAuth users can browse and resume remote Claude sessions from the Sessions dialog (v2.1.16)
+
+**Exercise:**
+- Use `@` to reference a large PDF in a Claude Code session and observe how it handles pagination
+- Try resuming a remote session from VS Code's Sessions dialog
+
 ---
 
 ### WEEK 7: Testing & Quality
@@ -254,6 +309,19 @@
 **Deliverable:** At least 2 custom skills, 1 hook, and 1 custom command.
 **Skills:** Skills system, hooks, custom commands, workflow automation
 
+#### Skills, Hooks & Commands Updates (Feb 2026)
+- **Custom command argument shorthand:** Use `$0`, `$1`, etc. to access individual arguments in custom commands (v2.1.19)
+- **`CLAUDE_CODE_ENABLE_TASKS` env var:** Set to `false` to revert to the old task system temporarily (v2.1.19)
+- **`TeammateIdle` and `TaskCompleted` hook events** added for multi-agent workflows (v2.1.33)
+- **Customizable `spinnerVerbs`** setting for personalizing the activity spinner (v2.1.23)
+- **Bash permission matching** fixed for commands using environment variable wrappers (v2.1.38)
+- **Sandbox bypass fix:** Commands excluded from sandboxing via `sandbox.excludedCommands` or `dangerouslyDisableSandbox` no longer bypass the Bash ask permission rule when `autoAllowBashIfSandboxed` is enabled (v2.1.34)
+
+**Exercise:**
+- Create a custom command that uses `$0` and `$1` argument shorthand
+- Set up a hook that responds to `TeammateIdle` or `TaskCompleted` events
+- Configure `spinnerVerbs` in your settings to customize the spinner
+
 ---
 
 ### WEEK 10: MCP Servers & Plugins
@@ -278,6 +346,16 @@
 
 **Deliverable:** Two working MCP servers connected to Claude Code.
 **Skills:** MCP architecture, FastMCP, tool design, server integration
+
+#### MCP Updates (Feb 2026)
+- **Pre-configured OAuth MCP connectors** added, simplifying authentication setup for MCP servers (v2.1.30)
+- **Restricted tool access:** Support added for restricting which MCP tools are available to specific contexts (v2.1.33)
+- **npm deprecation:** Claude Code installation via npm is deprecated — use `claude install` or see the getting started docs (v2.1.15)
+- **React Compiler** now used for UI rendering performance improvements (v2.1.15)
+
+**Exercise:**
+- Set up an OAuth-based MCP connector and test authenticated access
+- Experiment with restricting MCP tool availability per-project
 
 ---
 
@@ -310,6 +388,18 @@
 - Relevant to agent teams and parallel session workflows covered this week.
 - Explore how the SDK complements MCP servers for orchestrating multi-agent pipelines.
 - **Reference:** https://www.anthropic.com/news/claude-sonnet-4-5
+
+#### Agent Teams Updates (Feb 2026)
+- **Agent teams research preview** launched — multi-agent collaboration feature requiring `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` (v2.1.32). Note: this is token-intensive.
+- **tmux integration** fixed for agent teammate sessions to properly send and receive messages (v2.1.33)
+- **`TeammateIdle` and `TaskCompleted` hook events** added for orchestrating multi-agent workflows (v2.1.33)
+- **Agent teams crash fix** when settings change between renders (v2.1.34)
+- **Sandbox security fix** preventing excluded commands from bypassing Bash ask permission rules (v2.1.34)
+
+**Exercise:**
+- Enable agent teams with `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` and try a multi-agent task
+- Set up a `TeammateIdle` hook to monitor agent collaboration
+- Test agent teams in a tmux session
 
 ---
 
