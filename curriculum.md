@@ -49,6 +49,11 @@
 - Try Ctrl+G to open an external editor from within Claude Code
 - Customize your spinner verbs in settings
 
+#### Maintaining Your Claude Code Environment
+- The `~/.claude` directory stores session data, memories, and settings. It can grow to 1GB+ after a few weeks of daily use.
+- There is no built-in auto-cleanup — periodically review and prune old session data.
+- Key space consumers: session transcripts, tool outputs, and cached context.
+
 ---
 
 ### WEEK 2: Git & Version Control
@@ -193,6 +198,11 @@ On exit, Claude Code now shows a session resume hint so you can continue your co
 
 **Deliverable:** Your vessel tracker connected to Supabase with full CRUD operations.
 **Skills:** Database concepts, Supabase, SQL basics, API routes, CRUD operations
+
+#### Cowork: Claude Code for Desktop
+- **Cowork** brings Claude Code's agentic capabilities to the Claude desktop app. Give Claude access to a folder, set a task, and let it work — it loops you in along the way.
+- Useful when you want Claude Code-style workflows without opening a terminal.
+- Try it at [claude.com/download](https://claude.com/download).
 
 ---
 
@@ -356,6 +366,9 @@ On exit, Claude Code now shows a session resume hint so you can continue your co
 **Exercise:**
 - Set up an OAuth-based MCP connector and test authenticated access
 - Experiment with restricting MCP tool availability per-project
+
+#### MCP Background & Context
+- **Video:** [Why we built — and donated — the Model Context Protocol](https://www.youtube.com/watch?v=kQRu7DdTTVA) — Anthropic's Stuart Ritchie speaks with co-creator David Soria Parra about MCP's development as an open standard connecting AI to external tools and services.
 
 ---
 
