@@ -146,6 +146,19 @@ On exit, Claude Code now shows a session resume hint so you can continue your co
 - Let Claude build up auto memories across a few sessions, then review what it stored in `~/.claude/`
 - Use the task management system on a multi-step project to track progress
 
+#### Community Tools: ClaudeDesk
+
+- **ClaudeDesk v4.4.0** — An open-source Electron desktop app wrapping the Claude Code CLI. Provides multi-session terminals, split views, and agent team visualization.
+- Features: full git workflow (status, staging, commits) without leaving the app, 233+ automated tests.
+- Useful as a GUI alternative when you prefer a desktop interface over the raw terminal.
+- **Reference:** https://github.com/anthropics/claudedesk
+
+#### Token Usage Awareness
+
+- **Opus 4.6 uses more tokens** than previous models due to deeper planning and longer autonomous runs. Monitor your usage with `/cost` during sessions.
+- Community reports suggest token consumption can spike significantly when using Opus 4.6 for design-heavy or test-heavy workflows.
+- **Tip:** Use Sonnet 4.5 or Haiku 4.5 for routine tasks, and reserve Opus 4.6 for complex architecture and multi-step reasoning where quality matters most.
+
 ---
 
 ## Phase II: Building (Weeks 4–8)
@@ -203,6 +216,12 @@ On exit, Claude Code now shows a session resume hint so you can continue your co
 - **Cowork** brings Claude Code's agentic capabilities to the Claude desktop app. Give Claude access to a folder, set a task, and let it work — it loops you in along the way.
 - Useful when you want Claude Code-style workflows without opening a terminal.
 - Try it at [claude.com/download](https://claude.com/download).
+
+#### Shell & Input Fixes (Feb 2026)
+
+- **Shell completion cache** files no longer get truncated on exit (v2.1.21)
+- **Full-width (zenkaku) input** from Japanese IME now works correctly in option selection prompts (v2.1.21, v2.1.31)
+- **Tab key** fixed to properly autocomplete instead of queueing slash commands (v2.1.38)
 
 ---
 
@@ -331,6 +350,39 @@ On exit, Claude Code now shows a session resume hint so you can continue your co
 - Create a custom command that uses `$0` and `$1` argument shorthand
 - Set up a hook that responds to `TeammateIdle` or `TaskCompleted` events
 - Configure `spinnerVerbs` in your settings to customize the spinner
+
+#### Non-Interactive Mode & CI Automation
+
+- **Structured outputs** in non-interactive (`-p`) mode are now fully supported (v2.1.22). Use `-p` with `--output-format json` to get structured responses for scripts and CI pipelines.
+- **Startup performance** improved when resuming sessions with `saved_hook_context` (v2.1.29).
+- **Gateway compatibility:** Users on Bedrock or Vertex can set `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` to avoid beta header validation errors (v2.1.25, v2.1.27).
+
+**Exercise:**
+- Run `claude -p "list all files" --output-format json` and parse the structured output in a bash script
+- Set up a CI step that uses Claude Code in non-interactive mode
+
+#### Auto Memory (Feb 2026)
+
+As of v2.1.32, Claude Code **automatically records and recalls memories** as it works. This is a significant change to how context persists across sessions.
+
+**How it works:**
+- Claude maintains a persistent memory directory at `~/.claude/projects/<project>/memory/`
+- `MEMORY.md` is loaded into the system prompt each session (keep it under 200 lines)
+- Separate topic files (e.g., `debugging.md`, `patterns.md`) can hold detailed notes
+- Memories persist across conversations automatically
+
+**What Claude saves:**
+- Stable patterns confirmed across multiple interactions
+- Key architectural decisions and important file paths
+- User preferences for workflow and tools
+- Solutions to recurring problems
+
+**What Claude does NOT save:**
+- Session-specific or temporary state
+- Unverified conclusions from a single file read
+- Anything duplicating CLAUDE.md instructions
+
+**Exercise:** After a few sessions on a project, inspect `~/.claude/projects/` to see what Claude has remembered. Try asking Claude to "remember" a preference (e.g., "always use bun instead of npm") and verify it persists in the next session.
 
 ---
 
@@ -509,3 +561,30 @@ Claude Haiku 4.5 matches state-of-the-art coding capabilities from months ago wh
 *Curriculum Version: 2.0 — February 2026*
 *Model: Claude Opus 4.6*
 *Last Updated: 2026-02-12*
+
+
+---
+
+### Appendix F: Workflow Inspiration
+
+**Claude + Obsidian (Knowledge Management)**
+- Some professionals pair Claude with Obsidian for note-taking, documentation, and knowledge management workflows.
+- Claude can read and edit Obsidian vault files directly via Claude Code or Cowork.
+- Useful for product managers, researchers, and anyone who maintains a personal knowledge base alongside their codebase.
+
+---
+
+### Appendix G: Claude Agent SDK
+
+Along with the Claude Sonnet 4.5 release (Sep 2025), Anthropic released the **Claude Agent SDK** for building capable agents programmatically.
+
+The Agent SDK allows developers to:
+- Build custom agents with tool use capabilities
+- Define agent workflows and multi-step task execution
+- Integrate Claude into existing applications as an autonomous agent
+
+This extends beyond Claude Code's built-in agent features (like agent teams) into custom agent development. Relevant for students who want to build their own AI-powered tools and workflows after completing the curriculum.
+
+**Resources:**
+- [Claude Sonnet 4.5 + Agent SDK announcement](https://www.anthropic.com/news/claude-sonnet-4-5)
+- Claude Agent SDK documentation on the Claude Developer Platform
